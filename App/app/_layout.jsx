@@ -44,6 +44,12 @@ export default function RootLayout() {
                                 animationDuration: 800,
                             }}
                         />
+                        <Stack.Screen
+                            name="timer"
+                            options={{
+                                headerShown: false,
+                            }}
+                        />
                     </Stack>
                 </GlobalProvider>
             </GestureHandlerRootView>

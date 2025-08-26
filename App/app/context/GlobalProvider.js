@@ -14,6 +14,23 @@ export const GlobalProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [error, setError] = useState(null);
     const [selectedAdventure, setSelectedAdventure] = useState(null);
+    const [isWorkSessionActive, setIsWorkSessionActive] = useState(false);
+    const [workSessionSettings, setWorkSessionSettings] = useState({ duration: 50 * 60, goal: '' });
+    const [timer, setTimer] = useState(0);
+    const [totalWorkTime, setTotalWorkTime] = useState(0);
+
+    useEffect(() => {
+        let interval = null;
+        if (isWorkSessionActive && timer > 0) {
+            interval = setInterval(() => {
+                setTimer(prev => prev - 1);
+                setTotalWorkTime(prev => prev + 1);
+            }, 1000);
+        } else if (isWorkSessionActive && timer === 0) {
+            endWorkSession(); // End session when timer finishes
+        }
+        return () => clearInterval(interval);
+    }, [isWorkSessionActive, timer]);
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -56,9 +73,38 @@ export const GlobalProvider = ({ children }) => {
         setIsAuthenticated(false);
         setUser(null);
     };  
+
+    const startWorkSession = (settings) => {
+        setWorkSessionSettings(settings);
+        setTimer(settings.duration);
+        setIsWorkSessionActive(true);
+    };
+
+    const endWorkSession = () => {
+        setIsWorkSessionActive(false);
+        setTimer(0);
+    };
     
     return (
-        <GlobalContext.Provider value={{ user, isAuthenticated, error, setError, setIsAuthenticated, setUser, login, logout, signup, selectedAdventure, setSelectedAdventure }}>
+        <GlobalContext.Provider value={{ 
+            user, 
+            isAuthenticated, 
+            error, 
+            setError, 
+            setIsAuthenticated, 
+            setUser, 
+            login, 
+            logout, 
+            signup, 
+            selectedAdventure, 
+            setSelectedAdventure,
+            isWorkSessionActive,
+            workSessionSettings,
+            startWorkSession,
+            endWorkSession,
+            timer,
+            totalWorkTime
+        }}>
             {children}
         </GlobalContext.Provider>
     );
