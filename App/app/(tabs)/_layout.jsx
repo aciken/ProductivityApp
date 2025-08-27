@@ -9,6 +9,11 @@ export default function TabsLayout() {
       screenOptions={{
         headerShown: false,
       }}
-    />
+    >
+      <Tabs.Screen name="home" />
+      <Tabs.Screen name="timeFocused" />
+      <Tabs.Screen name="screenTime" />
+      <Tabs.Screen name="profile" />
+    </Tabs>
   );
 }

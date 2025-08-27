@@ -12,9 +12,14 @@ export default function CustomTabBar() {
       ionIcon: 'home'
     },
     { 
-      name: 'Friends', 
-      path: '/friends', 
-      ionIcon: 'people'
+      name: 'Time Focused', 
+      path: '/timeFocused', 
+      ionIcon: 'leaf'
+    },
+    { 
+      name: 'Screen Time', 
+      path: '/screenTime', 
+      ionIcon: 'phone-portrait'
     },
     { 
       name: 'Profile', 
@@ -33,7 +38,8 @@ export default function CustomTabBar() {
       justifyContent: 'space-around', 
       alignItems: 'center', 
       backgroundColor: '#121212', 
-      paddingVertical: 12,
+      paddingTop: 12,
+      paddingBottom: 24, // Increased bottom padding to move icons up
     }}>
       {tabs.map((tab) => {
         const isActive = pathname === tab.path;
@@ -46,10 +52,7 @@ export default function CustomTabBar() {
             }}
             onPress={() => handleTabPress(tab.path)}
           >
-            <Ionicons name={tab.ionIcon} size={24} color={isActive ? '#FFFFFF' : '#B3B8C8'} />
-            <Text style={{ color: isActive ? '#FFFFFF' : '#B3B8C8', fontSize: 12, marginTop: 4 }}>
-              {tab.name}
-            </Text>
+            <Ionicons name={tab.ionIcon} size={28} color={isActive ? '#FFFFFF' : '#B3B8C8'} />
           </TouchableOpacity>
         );
       })}
